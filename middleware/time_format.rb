@@ -1,25 +1,27 @@
 class TimeFormat
 
-  attr_reader :correct_format, :incorrect_format
+  attr_reader :incorrect_format
 
   FORMATS = { 'year' => '%Y', 'month' => '%m', 'day' => '%d',
               'hour' => '%H', 'minute' => '%M', 'second' => '%S'}
 
   def initialize(params)
-    @correct_format = ''
+    @params = params
+    @correct_format = []
     @incorrect_format = []
-    check_format(params['format'].split(','))
   end
 
+  def format_time
+    check_format
+    Time.now.strftime(@correct_format.join('-'))
+  end
 
   private
 
-  def check_format(params)
-    separator = '-'
-    params.each do |f|
+  def check_format
+    @params.each do |f|
       if FORMATS[f]
-        @correct_format += FORMATS[f]
-        @correct_format += separator if f != params.last
+        @correct_format << FORMATS[f]
       else
         @incorrect_format << f
       end
