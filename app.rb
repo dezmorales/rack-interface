@@ -30,4 +30,8 @@ class App
   def http_response(status, body)
     Rack::Response.new(body, status, HEADERS).finish
   end
+
+  def test
+
+  end
 end
